@@ -10,7 +10,7 @@ end
 
 class HourlyEmployee < Employee
 
-		attr_reader(:hourly_rate,:hours_worked)
+    attr_reader(:hourly_rate,:hours_worked)
 
     def initialize(name, email, hourly_rate, hours_worked = 40)
         @name = name
@@ -20,64 +20,64 @@ class HourlyEmployee < Employee
     end
 
     def calculate_salary()
-      	weekly_salary = @hourly_rate * @hours_worked
-      	puts "Weekly salary #{weekly_salary}"
+        weekly_salary = @hourly_rate * @hours_worked
+        puts "Weekly salary #{weekly_salary}"
     end
 end
 
 class SalariedEmployee < Employee
 
-	attr_reader(:year_salary)
+  attr_reader(:year_salary)
 
-	def initialize(name,email,year_salary)
-		@name = name 
-		@email = email
-		@year_salary = year_salary
-	end
+  def initialize(name,email,year_salary)
+    @name = name 
+    @email = email
+    @year_salary = year_salary
+  end
 
-	def calculate_salary()
-		weekly_salary = @year_salary/52
-		puts "Weekly salary  #{weekly_salary}"
-	end
+  def calculate_salary()
+    weekly_salary = @year_salary/52
+    puts "Weekly salary  #{weekly_salary}"
+  end
 
 end
 
 class MultiPaymentEmployee < Employee
 
-	attr_reader(:year_salary,:hours_worked,:extrapay)
+  attr_reader(:year_salary,:hours_worked,:extrapay)
 
-	def initialize(name,email,year_salary,extrapay,hours_worked)
-		@name = name
-		@email = email
-		@year_salary = year_salary
-		@hours_worked = hours_worked
-		@extrapay = extrapay
-	end
+  def initialize(name,email,year_salary,extrapay,hours_worked)
+    @name = name
+    @email = email
+    @year_salary = year_salary
+    @hours_worked = hours_worked
+    @extrapay = extrapay
+  end
 
-	def calculate_salary
-		if hours_worked > 40 
-			weekly_salary = (@year_salary/52) + ((@hours_worked - 40) * extrapay)
-		else 
-			weekly_salary = @year_salary/52
-		end
+  def calculate_salary
+    if hours_worked > 40 
+      weekly_salary = (@year_salary/52) + ((@hours_worked - 40) * extrapay)
+    else 
+      weekly_salary = @year_salary/52
+    end
 
-		puts "Weekly salary #{weekly_salary}"
+    puts "Weekly salary #{weekly_salary}"
 
-	end
+  end
 
 end
 
 class Payroll
-		attr_reader :employees
+    attr_reader :employees
     def initialize(employees)
         @employees = employees
     end
 
-  	def pay_employees 
-    	@employees.each {|i| puts i.name 
-    		puts i.calculate_salary}
+    def pay_employees 
+      @employees.each {|i| puts i.name 
+        puts i.calculate_salary}
 
-  	end
+    end
 end
 
 

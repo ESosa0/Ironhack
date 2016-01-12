@@ -1,38 +1,38 @@
 require 'pry'
 
 class Car
-	attr_reader :city
+  attr_reader :city
 
-	def self.sound_twice(car)
-		2.times {car.add_sound}
-	end
-	def initialize(sound)
-		@sound = sound
-		@city = []
-		end
-	def add_sound
-		puts @sound
-	end
-	def add_cities(city)
-		@city.push(city)
-	end
-	def cities_visited
-		puts @city
-	end
-	def write_file
-		IO.write("car_info.txt", @city)
-	end
+  def self.sound_twice(car)
+    2.times {car.add_sound}
+  end
+  def initialize(sound)
+    @sound = sound
+    @city = []
+    end
+  def add_sound
+    puts @sound
+  end
+  def add_cities(city)
+    @city.push(city)
+  end
+  def cities_visited
+    puts @city
+  end
+  def write_file
+    IO.write("car_info.txt", @city)
+  end
 end
 
 class Racing_car < Car
-	def initialize
-	end
-	def add_sound
-		puts "BROOM"
-	end
-	def self.sound_twice(car)
-		2.times {car.add_sound}
-	end
+  def initialize
+  end
+  def add_sound
+    puts "BROOM"
+  end
+  def self.sound_twice(car)
+    2.times {car.add_sound}
+  end
 end
 
 rcar1 = Racing_car.new

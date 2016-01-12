@@ -26,7 +26,7 @@ homes = [
 
 #Iteration #1: List of homes
 homes.each do |hm|
-	puts "Name: #{hm.name}. City: #{hm.city}. Capacity: #{hm.capacity}. Price: #{hm.price} "
+  puts "Name: #{hm.name}. City: #{hm.city}. Capacity: #{hm.capacity}. Price: #{hm.price} "
 end
 
 #Iteration #2: Sorting
@@ -34,21 +34,21 @@ puts "How would you like to sort the homes? By price or capacity?"
 sort_by_answer = gets.chomp
 
 if sort_by_answer == "price"
-	sorted_by_price = homes.sort do |home1, home2|
-		home1.price <=> home2.price
-	end
-	sorted_by_price.each do |hm|
-		puts "Name: #{hm.name}. City: #{hm.city}. Capacity: #{hm.capacity}. Price: #{hm.price} "
-	end
+  sorted_by_price = homes.sort do |home1, home2|
+    home1.price <=> home2.price
+  end
+  sorted_by_price.each do |hm|
+    puts "Name: #{hm.name}. City: #{hm.city}. Capacity: #{hm.capacity}. Price: #{hm.price} "
+  end
 elsif sort_by_answer == "capacity"
-	sorted_by_capacity = homes.sort do |home1, home2|
-		home1.capacity <=> home2.capacity
-	end
-	sorted_by_capacity.each do |hm|
-		puts "Name: #{hm.name}. City: #{hm.city}. Capacity: #{hm.capacity}. Price: #{hm.price} "
-	end
+  sorted_by_capacity = homes.sort do |home1, home2|
+    home1.capacity <=> home2.capacity
+  end
+  sorted_by_capacity.each do |hm|
+    puts "Name: #{hm.name}. City: #{hm.city}. Capacity: #{hm.capacity}. Price: #{hm.price} "
+  end
 else 
-	puts "Sorry I didn't understand. Here's the unsorted list: Name: #{hm.name}. City: #{hm.city}. Capacity: #{hm.capacity}. Price: #{hm.price} "
+  puts "Sorry I didn't understand. Here's the unsorted list: Name: #{hm.name}. City: #{hm.city}. Capacity: #{hm.capacity}. Price: #{hm.price} "
 end
 
 #Iteration #3: Filter by city
@@ -56,15 +56,15 @@ puts "Which city would you like to stay in?"
 city_preference = gets.chomp
 
 preferred_city = homes.select do |hm|
-	hm.city == city_preference
+  hm.city == city_preference
 end
 preferred_city.each do |hm|
-	puts "You can stay at #{hm.name} located in #{hm.city} for $#{hm.price} per night."
+  puts "You can stay at #{hm.name} located in #{hm.city} for $#{hm.price} per night."
 end
 
 #Iteration #4: Average
 total_price = preferred_city.reduce(0.0) do |sum, hm|
-	sum + hm.price
+  sum + hm.price
 end
 
 average_price = total_price / preferred_city.length
@@ -76,7 +76,7 @@ puts "How much would you like to spend on a home?"
 preferred_price = gets.chomp
 
 home_price = homes.find do |hm|
-	hm.price == preferred_price.to_i
+  hm.price == preferred_price.to_i
 end
 
 puts "The first home that costs $#{preferred_price} is #{home_price.name}."
