@@ -2,59 +2,59 @@ require 'pry'
 
 class Blog
 
-	def initialize
-		@container = []
-		@page_number = 1
-		@items_on_page =3
-	end
+  def initialize
+    @container = []
+    @page_number = 1
+    @items_on_page =3
+  end
 
-	def add_post(the_post)
-		@container.push(the_post)
-		@container.sort_by!(&:date).reverse!
-	end
+  def add_post(the_post)
+    @container.push(the_post)
+    @container.sort_by!(&:date).reverse!
+  end
 
-	def publish_front_page
-		from = (@page_number - 1) * @items_on_page
-		to = from + @items_on_page
-		@container[from..to].each do |the_post|
-			the_post.print
-		end
-		puts "#{@page_number} of #{(@container.length/@items_on_page.to_f).ceil}"
-	end
+  def publish_front_page
+    from = (@page_number - 1) * @items_on_page
+    to = from + @items_on_page
+    @container[from..to].each do |the_post|
+      the_post.print
+    end
+    puts "#{@page_number} of #{(@container.length/@items_on_page.to_f).ceil}"
+  end
 
-	def next_page
-		@page_number += 1
-	end
+  def next_page
+    @page_number += 1
+  end
 
-	def prev_page
-		@page_number -= 1
-	end
+  def prev_page
+    @page_number -= 1
+  end
 
 end
 
 class Post
-	attr_reader :title, :date, :text
+  attr_reader :title, :date, :text
 
-	def initialize (title, date, text)
-		@title = title
-		@date = date
-		@text = text
-	end
-	def print
-		puts @title
-		puts "**************"
-		puts @text
-		puts "----------------" 
-	end
+  def initialize (title, date, text)
+    @title = title
+    @date = date
+    @text = text
+  end
+  def print
+    puts @title
+    puts "**************"
+    puts @text
+    puts "----------------" 
+  end
 end
 
 class SponsoredPost < Post
-	def print
-		puts "****** #{@title} ******"
-		puts "**************"
-		puts @text
-		puts "----------------" 
-	end
+  def print
+    puts "****** #{@title} ******"
+    puts "**************"
+    puts @text
+    puts "----------------" 
+  end
 end
 
 
@@ -69,9 +69,9 @@ blog.publish_front_page
 puts "Type NEXT or PREV."
 navigate = gets.chomp
 if navigate == "next" || navigate == "NEXT"
-	blog.next_page
+  blog.next_page
 elsif navigate == "prev" || navigate == "PREV"
-	blog.prev_page
+  blog.prev_page
 end
 blog.publish_front_page
 
