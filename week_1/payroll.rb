@@ -95,4 +95,3 @@ payroll.pay_employees
 # etc
 # etc
 
-ted.calculate_salary
