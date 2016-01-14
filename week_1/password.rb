@@ -8,7 +8,7 @@ class User
   end
   def check_password(name, password)
     if password.include? "a" 
-      puts "You are now logged in, #{@name}."
+      puts "You are now logged in, #{name}."
       print "Please enter some text > "
       text = gets.chomp
       count_words(text)
