@@ -4,26 +4,30 @@ class Board
 
 end
 
-
-
-class Rook 
-  def initialize
+class Piece 
+  def initialize 
     @initial_x 
     @initial_y 
     @new_x
     @new_y
   end
-  def move(destination_x, destination_y)
+    def move(destination_x, destination_y)
     @new_x = destination_x
     @new_y = destination_y
     validate_move?
   end
+end
+
+class Rook < Piece
   def validate_move?
     if @initial_x == @new_x && @initial_y != @new_y
+      true
       puts "Legal"
     elsif @initial_x != @new_x && @initial_y == @new_y
+      true
       puts "Legal"
     else
+      false
       puts "Illegal"
     end
   end
@@ -57,24 +61,13 @@ class WhiteRookRight < Rook
   end
 end
 
-class Bishop
-  def initialize
-    @initial_x
-    @initial_y
-    @new_x
-    @new_y
-  end
-  def move(destination_x, destination_y)
-    @new_x = destination_x
-    @new_y = destination_y
-    validate_move?
-  end
+class Bishop < Piece
   def validate_move?
-    if @new_x == @initial_x + 1 && @new_y == @initial_y + 1
+    if @new_x - @initial_x == @new_y - @initial_y
+      true
       puts "Legal"
-    elsif @new_x == @initial_x - 1 && @new_y == @initial_y - 1
-      puts "Legal"
-    else
+    else 
+      false
       puts "Illegal"
     end
   end
@@ -108,9 +101,43 @@ class WhiteBishopRight < Bishop
   end
 end
 
-WhiteBishopLeft.new.move(2,7)
+class Queen < Piece
+  def validate_move?
+    if @initial_x == @new_x && @initial_y != @new_y #Rook condition
+      true
+      puts "Legal"
+    elsif @initial_x != @new_x && @initial_y == @new_y #Rook condition
+      true
+      puts "Legal"    
+    elsif @new_x - @initial_x == @new_y - @initial_y #Bishop condition
+      true
+      puts "Legal"
+    else 
+      false
+      puts "Illegal"
+    end
+  end
+end
 
+class BlackQueen < Queen
+  def initialize
+    @initial_x = 4
+    @initial_y = 0
+  end
+end
 
+class WhiteQueen < Queen
+  def initialize
+    @initial_x = 3 
+    @initial_y = 8
+  end
+end
+
+WhiteQueen.new.move(0,5)
+
+# BlackRookLeft.new.move(1,0)
+
+# BlackBishopLeft.new.move(5,4)
 
 
 
