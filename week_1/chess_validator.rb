@@ -1,139 +1,210 @@
 require 'pry'
 
 class Board
-
+  attr_reader :grid
+  def initialize
+    @grid = [
+      [Rook.new(:black), nil, nil, Rook.new(:black), nil, nil, nil, Rook.new(:black)],
+      [nil, nil, nil, nil, nil, nil, nil, nil],
+      [nil, nil, nil, nil, nil, nil, nil, nil],
+      [nil, nil, nil, nil, nil, nil, nil, nil],
+      [Rook.new(:white), nil, nil, nil, nil, nil, nil, nil],
+      [nil, nil, nil, nil, nil, nil, nil, nil],
+      [nil, nil, nil, nil, nil, nil, nil, nil],
+      [Rook.new(:white), nil, nil, nil, nil, nil, nil, Rook.new(:white)],
+    ]
+  end
+  def at_position(position) # => [0,0]
+    @grid[position[1]][position[0]]
+  end
 end
 
 class Piece 
-  def initialize 
-    @initial_x 
-    @initial_y 
-    @new_x
-    @new_y
-  end
-    def move(destination_x, destination_y)
-    @new_x = destination_x
-    @new_y = destination_y
-    validate_move?
+  attr_reader :color
+  def initialize(color)
+    @color = color
   end
 end
 
 class Rook < Piece
-  def validate_move?
-    if @initial_x == @new_x && @initial_y != @new_y
-      true
+  # => validate_move?(Board.new, [0,0], [7,0])
+  def validate_move?(board, origin, destination)
+    origin_x = origin[0]
+    origin_y = origin[1]
+    destination_x = destination[0]
+    destination_y = destination[1]
+    piece = board.at_position(destination)
+    range_x = origin_x..destination_x
+    sorted_x = [origin_x, destination_x].sort
+    (sorted_x.first..sorted_x.last).each do |position_x|
+      puts "x [#{position_x}, #{destination_y}]"
+      if position_x != origin_x && position_x != destination_x && board.at_position([position_x, destination_y]) != nil 
+        puts "Illegal move, path is blocked x "
+        return false
+      end
+    end
+    
+    sorted_y = [origin_y, destination_y].sort
+    (sorted_y.first..sorted_y.last).each do |position_y|
+      puts "y [#{destination_x}, #{position_y}]"
+      if position_y != origin_y && position_y != destination_y && board.at_position([destination_x, position_y]) != nil 
+        puts "Illegal move, path is blocked y"
+        return false
+      end
+    end
+    if piece && piece.color == self.color
+      puts "Illegal move, cannot replace your own piece"
+      return false
+    elsif piece && piece.color != self.color
+      puts "Legal, nice grab!"
+      return true
+    elsif origin_x == destination_x && origin_y != destination_y
       puts "Legal"
-    elsif @initial_x != @new_x && @initial_y == @new_y
-      true
+      return true
+    elsif origin_x != destination_x && origin_y == destination_y
       puts "Legal"
+      return true
     else
-      false
-      puts "Illegal"
+      puts "Illegal move, Rooks don't move that way."
+      return false
     end
   end
 end
 
-class BlackRookLeft < Rook
-  def initialize
-    @initial_x = 0
-    @initial_y = 0
-  end
-end
 
-class BlackRookRight <Rook
-  def initialize
-    @initial_x = 8
-    @initial_y = 0
-  end
-end
+board1= Board.new
 
-class WhiteRookLeft < Rook
-  def initialize
-    @initial_x = 0
-    @initial_y = 8
-  end
-end
+# black_rook = board1.at_position([7,0])
+white_rook = board1.at_position([0,7])
 
-class WhiteRookRight < Rook
-  def initialize
-    @initial_x = 8
-    @initial_y = 8
-  end
-end
+white_rook.validate_move?(board1, [0,7], [4,2])
 
-class Bishop < Piece
-  def validate_move?
-    if @new_x - @initial_x == @new_y - @initial_y
-      true
-      puts "Legal"
-    else 
-      false
-      puts "Illegal"
-    end
-  end
-end
 
-class BlackBishopLeft < Bishop
-  def initialize
-    @initial_x = 2
-    @initial_y = 0
-  end
-end
 
-class BlackBishopRight < Bishop
-  def initialize
-    @initial_x = 5
-    @initial_y = 0
-  end
-end
+# class Bishop < Piece
+#   def validate_move?
+#     if @new_x - @initial_x == @new_y - @initial_y
+#       true
+#       puts "Legal"
+#     else 
+#       false
+#       puts "Illegal"
+#     end
+#   end
+# end
 
-class WhiteBishopLeft < Bishop
-  def initialize
-    @initial_x = 2
-    @initial_y = 8
-  end
-end
+# class BlackBishopLeft < Bishop
+#   def initialize
+#     @initial_x = 2
+#     @initial_y = 0
+#   end
+# end
 
-class WhiteBishopRight < Bishop
-  def initialize
-    @initial_x = 5
-    @initial_y = 8
-  end
-end
+# class BlackBishopRight < Bishop
+#   def initialize
+#     @initial_x = 5
+#     @initial_y = 0
+#   end
+# end
 
-class Queen < Piece
-  def validate_move?
-    if @initial_x == @new_x && @initial_y != @new_y #Rook condition
-      true
-      puts "Legal"
-    elsif @initial_x != @new_x && @initial_y == @new_y #Rook condition
-      true
-      puts "Legal"    
-    elsif @new_x - @initial_x == @new_y - @initial_y #Bishop condition
-      true
-      puts "Legal"
-    else 
-      false
-      puts "Illegal"
-    end
-  end
-end
+# class WhiteBishopLeft < Bishop
+#   def initialize
+#     @initial_x = 2
+#     @initial_y = 7
+#   end
+# end
 
-class BlackQueen < Queen
-  def initialize
-    @initial_x = 4
-    @initial_y = 0
-  end
-end
+# class WhiteBishopRight < Bishop
+#   def initialize
+#     @initial_x = 5
+#     @initial_y = 7
+#   end
+# end
 
-class WhiteQueen < Queen
-  def initialize
-    @initial_x = 3 
-    @initial_y = 8
-  end
-end
+# class Queen < Piece
+#   def validate_move?
+#     if @initial_x == @new_x && @initial_y != @new_y #Rook condition
+#       puts "Legal"
+#       return true
+#     elsif @initial_x != @new_x && @initial_y == @new_y #Rook condition
+#       puts "Legal"    
+#       return true
+#     elsif @new_x - @initial_x == @new_y - @initial_y #Bishop condition
+#       puts "Legal"
+#       return true
+#     else 
+#       puts "Illegal"
+#       return false
+#     end
+#   end
+# end
 
-WhiteQueen.new.move(0,5)
+# class BlackQueen < Queen
+#   def initialize
+#     @initial_x = 4
+#     @initial_y = 0
+#   end
+# end
+
+# class WhiteQueen < Queen
+#   def initialize
+#     @initial_x = 3 
+#     @initial_y = 7
+#   end
+# end
+
+# class King < Piece
+#   def validate_move?
+#     if @new_x == @initial_x + 1 && @new_y == @initial_y 
+#      puts "Legal"
+#      return true
+#     elsif @new_x == @initial_x - 1 && @new_y == @initial_y
+#       puts "Legal"
+#       return true
+#     elsif @new_y == @initial_x + 1 && @new_y == @initial_y
+#      puts "Legal"
+#      return true
+#     elsif @new_y == @initial_y -1 && @new_y == @initial_y
+#       puts "Legal"
+#       return true
+#     elsif @new_x == @initial_x + 1 && @new_y == @initial_y + 1 
+#      puts "Legal"
+#      return true
+#     elsif @new_x == @initial_x + 1 && @new_y == @initial_y - 1 
+#       puts "Legal"
+#       return true
+#     elsif @new_x == @initial_x - 1 && @new_y == @initial_y - 1
+#       puts "Legal"
+#       return true
+#     elsif @new_x == @initial_x - 1 && @new_y == @initial_y + 1 
+#       puts "Legal"
+#       return true
+#     else
+#       puts "Illegal"
+#       return false
+#     end
+#   end
+# end
+
+# class BlackKing < King
+#   def initialize
+#     @initial_x = 3
+#     @initial_y = 0
+#   end
+# end
+
+# class WhiteKing < King
+#   def initialize
+#     @initial_x = 4 
+#     @initial_y = 7
+#   end
+# end
+
+
+
+#BlackKing.new.move(4,ß2)
+
+# WhiteQueen.new.move(0,5)
 
 # BlackRookLeft.new.move(1,0)
 
