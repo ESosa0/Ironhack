@@ -3,15 +3,22 @@ require 'pry'
 class Board
   attr_reader :grid
   def initialize
+    br1 = Rook.new(:black)
+    br2 = Rook.new(:black)
+    wr1 = Rook.new(:white)
+    wr1 = Rook.new(:white)
+    bq1 = Queen.new(:black)
+    wq1 = Queen.new(:white)
+
     @grid = [
-      [Rook.new(:black), nil, nil, Rook.new(:black), nil, nil, nil, Rook.new(:black)],
+      [br1, nil, nil, nil, bq1, nil, nil, br2],
       [nil, nil, nil, nil, nil, nil, nil, nil],
       [nil, nil, nil, nil, nil, nil, nil, nil],
       [nil, nil, nil, nil, nil, nil, nil, nil],
-      [Rook.new(:white), nil, nil, nil, nil, nil, nil, nil],
       [nil, nil, nil, nil, nil, nil, nil, nil],
       [nil, nil, nil, nil, nil, nil, nil, nil],
-      [Rook.new(:white), nil, nil, nil, nil, nil, nil, Rook.new(:white)],
+      [nil, nil, nil, nil, nil, nil, nil, nil],
+      [wr1, nil, nil, wq1, nil, nil, nil, wr1],
     ]
   end
   def at_position(position) # => [0,0]
@@ -71,13 +78,62 @@ class Rook < Piece
   end
 end
 
+class Queen < Piece
+  # => validate_move?(Board.new, [0,0], [7,0])
+  def validate_move?(board, origin, destination)
+    origin_x = origin[0]
+    origin_y = origin[1]
+    destination_x = destination[0]
+    destination_y = destination[1]
+    piece = board.at_position(destination)
+    range_x = origin_x..destination_x
+    sorted_x = [origin_x, destination_x].sort
+    (sorted_x.first..sorted_x.last).each do |position_x|
+      puts "x [#{position_x}, #{destination_y}]"
+      if position_x != origin_x && position_x != destination_x && board.at_position([position_x, destination_y]) != nil 
+        puts "Illegal move, path is blocked x "
+        return false
+      end
+    end
+    
+    sorted_y = [origin_y, destination_y].sort
+    (sorted_y.first..sorted_y.last).each do |position_y|
+      puts "y [#{destination_x}, #{position_y}]"
+      if position_y != origin_y && position_y != destination_y && board.at_position([destination_x, position_y]) != nil 
+        puts "Illegal move, path is blocked y"
+        return false
+      end
+    end
+    if piece && piece.color == self.color
+      puts "Illegal move, cannot replace your own piece"
+      return false
+    elsif piece && piece.color != self.color
+      puts "Legal, nice grab!"
+      return true
+    elsif origin_x == destination_x && origin_y != destination_y
+      puts "Legal"
+      return true
+    elsif origin_x != destination_x && origin_y == destination_y
+      puts "Legal"
+      return true
+    elsif (destination_x - origin_x).abs == (destination_y - origin_y).abs
+      puts "Legal"
+      return true
+    else
+      puts "Illegal move, Queens don't move that way."
+      return false
+    end
+  end
+end
 
 board1= Board.new
 
+black_queen = board1.at_position([4,0])
+black_queen.validate_move?(board1,[4,0],[2,2])
 # black_rook = board1.at_position([7,0])
-white_rook = board1.at_position([0,7])
+# white_rook = board1.at_position([0,7])
 
-white_rook.validate_move?(board1, [0,7], [4,2])
+# white_rook.validate_move?(board1, [0,7], [4,2])
 
 
 
@@ -129,9 +185,9 @@ white_rook.validate_move?(board1, [0,7], [4,2])
 #     elsif @initial_x != @new_x && @initial_y == @new_y #Rook condition
 #       puts "Legal"    
 #       return true
-#     elsif @new_x - @initial_x == @new_y - @initial_y #Bishop condition
-#       puts "Legal"
-#       return true
+    # elsif @new_x - @initial_x == @new_y - @initial_y #Bishop condition
+    #   puts "Legal"
+    #   return true
 #     else 
 #       puts "Illegal"
 #       return false
