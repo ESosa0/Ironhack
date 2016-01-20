@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form action= "/ascii/:word" method= "post">
+    <input type= "text" name= "list_input">
+    <input type= "submit" value= "Send">
+    </form>
+    <pre><%= @artii.asciify(@word_input) %> </pre>
+  </body>
+</html>
