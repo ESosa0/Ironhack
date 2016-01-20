@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <title>Tasks</title>
+</head>
+<body>
+  <h1>Tasks</h1>
+  <ul>
+    <% @joshs_todos.each do |task|%>
+      <li>
+        <%if task.complete?%>
+          <s><%=task.content%></s>
+          <form action="/delete_task" method="post">
+            <input type="hidden" name="id" value='<%=task.id %>'> 
+            <button type="submit" name="delete" value="delete">Delete</button>
+          </form>
+        <%else%>
+          <a href="/complete_task/<%= task.id %>"><%=task.content%></a>
+        <%end%>
+      </li>
+    <%end%>
+  </ul>
+  <a href="/new_task"> Create New Task </a>
+ </body>
+</html>
