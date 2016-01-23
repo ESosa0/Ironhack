@@ -6,9 +6,14 @@
 </head>
 <body>
   <h1>Movie Posters</h1>
-  <% movies_with_poster = @search.movies[0..20].select! { |movie| movie.poster != nil} %>
-  <% movies_with_poster[0..8].each do |movie|%>
-    <img src = "<%= movie.poster%>">
-  <%end%>
+  <h3>"Which movie was released in 1999?"</h3>
+    <% @movie_list.each do |movie| %>
+      <img src = "<%= movie.poster%>">
+      <form action="/answer" method="post">
+        <input type="hidden" name="id" value='<%=movie.id %>'> 
+        <button type="submit" name="submit" value="submit">This one!</button>
+      </form>
+    <% end %>
  </body>
 </html>
+
