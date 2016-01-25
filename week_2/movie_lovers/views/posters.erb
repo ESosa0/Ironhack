@@ -6,7 +6,7 @@
 </head>
 <body>
   <h1>Movie Posters</h1>
-  <h3>"Which movie was released in 1999?"</h3>
+  <h3>"Which movie was released in the 90s?"</h3>
     <% @movie_list.each do |movie| %>
       <img src = "<%= movie.poster%>">
       <form action="/answer" method="post">
