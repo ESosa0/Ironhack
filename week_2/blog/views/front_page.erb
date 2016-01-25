@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Blog</title>
+  </head>
+  <body>
+    <h1>Blog</h1>
+      <% @blog.container.each do |post|%>
+        <p><h3><%= post.title%></h3> </p>
+        <p><%= post.text%> </p>
+      <%end%>
+  </body>
+</html>
