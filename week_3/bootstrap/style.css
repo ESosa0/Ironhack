@@ -1,0 +1,51 @@
+/**  {
+  border-style: dashed;
+  border-color: black;
+}*/
+
+.container-fluid {
+
+}
+
+.row {
+  width: 1200px;
+  height: 364px;
+  background-color: red;
+}
+
+#header {
+  width: 1200px;
+  height: 90px;
+  background-color: #fff;
+}
+
+#picture {
+  width: 1347px;
+  height: 550px;
+  background-color: #000;
+}
+
+#tracks {
+  width: 1347px;
+  height: 314px;
+  background-color: #ed564b;
+}
+
+#content {
+  width: 1347px;
+  height: 1121px;
+  background-color: #fff;
+}
+
+#footer-nav {
+  width: 1347px;
+  height: 351px;
+  background-color: rgb(59, 59, 59);
+}
+
+#footer {
+  width: 1347px;
+  height: 78px;
+  background-color: rgb(41, 41, 41);
+}
+
