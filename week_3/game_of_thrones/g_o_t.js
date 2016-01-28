@@ -5,6 +5,16 @@ function fileActions(err, file){
   }
   var episodes = JSON.parse(file);
 
+  function findJonSnow(){
+    for(var i=0; i<episodes.length; i++){
+      var string = episodes[i].description
+        substring = "Jon Snow";
+      if (string.indexOf(substring) >-1){
+        return ("Found Jon Snow in episode " + episodes[i].episode_number);
+      } 
+    }
+  }
+
   function highlyRated(value){
     return value.rating >= 8.5;
   }
@@ -23,5 +33,10 @@ function fileActions(err, file){
     var stars = sortedEpisodes[i].rating;
     console.log("Rating " + stars + " " + "*".repeat(stars) + "\n");
   }
+
+  console.log(findJonSnow())
+
 }
+
 fs.readFile("./GoTEpisodes.json", 'utf8', fileActions);
+
