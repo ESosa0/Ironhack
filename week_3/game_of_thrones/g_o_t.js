@@ -5,13 +5,17 @@ function fileActions(err, file){
   }
   var episodes = JSON.parse(file);
 
-  var sortedEpisodes = episodes.sort(function(ep1,ep2) {
+  function highlyRated(value){
+    return value.rating >= 8.5;
+  }
+
+  var highestRated = episodes.filter(highlyRated);
+
+  var sortedEpisodes = highestRated.sort(function(ep1,ep2) {
     var keyA = (ep1.episode_number),
         keyB = (ep2.episode_number);
         return keyA-keyB;
   });
-
-console.log(sortedEpisodes.title)
 
   for(var i=0; i<sortedEpisodes.length; i++){
     console.log(sortedEpisodes[i].title + "  Episode # " + sortedEpisodes[i].episode_number)
