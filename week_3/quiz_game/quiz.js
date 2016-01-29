@@ -1,14 +1,17 @@
 var read = require('read');
 
-var Question = function(question, answer, id) {
+var Question = function(question, answer, id, points) {
   this.question = question;
   this.answer = answer;
   this.id = id
+  this.points = points
+
 };
 
 
-var Quiz = function(quizName) {
+var Quiz = function(quizName, pointsCounter) {
   var allQuestions = [];
+  var pointsCounter = pointsCounter || 0
 
   console.log(quizName);
 
@@ -21,9 +24,10 @@ var Quiz = function(quizName) {
 
     function displayAnswer(err, answer){
       if (answer.toLowerCase() === allQuestions[index].answer){
-        console.log("Correct!")
+        pointsCounter += allQuestions[index].points
+        console.log("\nCorrect! \nYou earned " + allQuestions[index].points + " points. Your score is now " + pointsCounter + ". \n")
         if (index===allQuestions.length-1){
-          console.log("You've finished the quiz!")
+          console.log("You've finished the quiz! Your final score is " + pointsCounter)
           return
         } else {
           return myself(index+1);
@@ -42,13 +46,13 @@ var Quiz = function(quizName) {
 };
 
 
-var question1 = new Question("What is the capital of Italy?", "rome", 1)
-var question2 = new Question("What is the capital of Spain?", "madrid", 2)
-var question3 = new Question("What is the capital of Ukraine?", "kiev", 3)
-var question4 = new Question("What is the capital of The Netherlands?", "amsterdam", 4)
+var question1 = new Question("What is the capital of Italy?", "rome", 1, 10)
+var question2 = new Question("What is the capital of Spain?", "madrid", 2, 10)
+var question3 = new Question("What is the capital of Ukraine?", "kiev", 3, 10)
+var question4 = new Question("What is the capital of The Netherlands?", "amsterdam", 4, 10)
 
 
-var euroQuiz = new Quiz("Quiz time! Capitals of Europe!");
+var euroQuiz = new Quiz("Quiz time! Capitals of Europe! \n");
 euroQuiz.getQuestions(question1);
 euroQuiz.getQuestions(question2);
 euroQuiz.getQuestions(question3);
