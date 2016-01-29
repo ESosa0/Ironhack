@@ -6,13 +6,14 @@ var Question = function(question, answer, id) {
   this.id = id
 };
 
+
 var Quiz = function() {
   var allQuestions = [];
 
   console.log("Quiz Time!");
 
-  this.askQuestion = function () {
-    var index = 0
+  this.askQuestion = function myself (index) {
+    var index = index || 0
     options = {
       prompt: allQuestions[index].question
     }
@@ -21,11 +22,10 @@ var Quiz = function() {
     function displayAnswer(err, answer){
       if (answer.toLowerCase() === allQuestions[index].answer){
         console.log("Correct!")
-        index ++
-        return this.askQuestion
+        return myself(index+1);
       } else {
         console.log("Incorrect")
-        return this.askQuestion
+        return myself(index);
       }
     } 
   };
